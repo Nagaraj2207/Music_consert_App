@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Conset System </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static "css/music_consert.css" %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url "music_consert" %}">
+          <img src="{% static "images/wave.png" %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+          &nbsp MusicApp</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse " id="navbarNav">
+            <ul class="navbar-nav"> 
+                <li class="nav-item">
+                    <a class="nav-link" id="home" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="bookhistory" href="#">Booking History</a>
+                </li>
+            </ul>
+          </div>
+          <div class="collapse navbar-collapse justify-content-end"" id="navbarNav">
+            <ul class="navbar-nav">
+              <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" name="query" placeholder="Search Concert">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>&nbsp&nbsp&nbsp&nbsp
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "user_logout" %}">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <div id="mydiv">
+    <form method="POST" class="register_form" id="form" action="{% url 'register' %}">
+        <center><h3>Register Form</h3>
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                <p>{{ field.label }}: <br> {{ field }}</p> 
+                {% for error in field.errors %}
+                    <small style="color: red">{{ error }}</small>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button id="registersubmit" type="submit">Register</button></center>
+    </form>
+    <div id="loginform">
+    <form method="post" class="login_form"  action="{% url 'user_login' %}">
+        <center><h3>Login Form</h3>
+            {% csrf_token %}
+            {% for field in loginform %}
+                <div>
+                    <p>{{ field.label }}: <br> {{ field }}</p> 
+                    {% for error in field.errors %}
+                        <small style="color: red">{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <button id="loginsubmit" type="submit">Login</button></center>
+    </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="7" style="background-color:burlywood"><center><h2>Concerts List</h2></center></th>           </tr>
+            <tr>
+                <th>Title</th>
+                <th>venue</th>
+                <th>artist</th>
+                <th>description</th>
+                <th>date</th>
+                <th>available_tickets</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for consert in conserts %}
+            <tr>
+                <td>{{ consert.title }}</td>
+                <td>{{ consert.venue }}</td>
+                <td>{{ consert.artist }}</td>
+                <td>{{ consert.description }}</td>
+                <td>{{ consert.date }}</td>
+                <td>{{ consert.available_tickets }}</td>
+                <td>
+                <a href="{% url 'book_tickets' consert.id %}" id="booktickets" class="btn btn-primary">Book Tickets</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <table class="table" id="booking_history">
+        <thead>
+            <tr>
+                <th colspan="7" style="background-color:burlywood"><center><h2>Booking History</h2></center></th>           </tr>
+            <tr>
+                <th>Title</th>
+                <th>venue</th>
+                <th>artist</th>
+                <th>Ticket Count</th>
+                <th>username</th>
+                <th>email</th>
+                <th>Booking Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for consert in Book_History %}
+            <tr>
+                <td>{{ consert.title }}</td>
+                <td>{{ consert.venue }}</td>
+                <td>{{ consert.artist }}</td>
+                <td>{{ consert.ticket_count }}</td>
+                <td>{{ consert.user_name }}</td>
+                <td>{{ consert.email }}</td>
+                <td>{{ consert.booking_time }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function(){
+            $("#form")[0].reset();
+            $("#form").hide();
+            $("#loginform").hide();
+            $("#booking_history").hide();
+            
+          $("#register").click(function(e){
+            e.preventDefault();
+            $("#form")[0].reset();
+            $("#form").toggle(); 
+        });
+          $("#registersubmit").click(function(e){
+            e.preventDefault();
+            $("#form").submit();
+            $("#form")[0].reset();
+        });
+        $("#login").click(function(e){
+            e.preventDefault();
+            $("#loginform").toggle();
+        });
+        $("#bookhistory").click(function(e){
+            e.preventDefault();
+            $("#mydiv").hide();
+            $("#booking_history").show();
+        });
+        $("#home").click(function(e){
+            e.preventDefault();
+            $("#mydiv").show();
+            $("#booking_history").hide();
+        });
+        });
+    </script>
+    
+</body>
+</html>

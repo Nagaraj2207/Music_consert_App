@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Conset System </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static "css/music_consert.css" %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url "home" %}">
+          <img src="{% static "images/wave.png" %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+          &nbsp MusicApp</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse " id="navbarNav">
+            <ul class="navbar-nav"> 
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "home" %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="register" href="#">User Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "user_login" %}">User Login</a>
+                </li>
+          </div>
+          <div class="collapse navbar-collapse justify-content-end"" id="navbarNav">
+            <ul class="navbar-nav">
+              <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" name="query" placeholder="Search Concert">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>&nbsp&nbsp&nbsp&nbsp
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "admin:login" %}">Admin Login</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <form method="POST" class="register_form" id="form" action="{% url 'register' %}">
+        <center><h3>Register Form</h3>
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                <p>{{ field.label }}: <br> {{ field }}</p> 
+                {% for error in field.errors %}
+                    <small style="color: red">{{ error }}</small>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button id="registersubmit" type="submit">Register</button></center>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="7" style="background-color:burlywood"><center><h2>Concerts List</h2></center></th>           </tr>
+            <tr>
+                <th>Title</th>
+                <th>venue</th>
+                <th>artist</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for consert in conserts %}
+            <tr>
+                <td>{{ consert.title }}</td>
+                <td>{{ consert.venue }}</td>
+                <td>{{ consert.artist }}</td>
+                <td>
+                <a href="{% url 'book_tickets' consert.id %}" id="booktickets" class="btn btn-primary">Book Tickets</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function(){
+            $("#form")[0].reset();
+            $("#form").hide();
+            
+          $("#register").click(function(e){
+            e.preventDefault();
+            $("#form")[0].reset();
+            $("#form").toggle(); 
+        });
+          $("#registersubmit").click(function(e){
+            e.preventDefault();
+            $("#form").submit();
+            $("#form")[0].reset();
+        });
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,92 @@
+body {
+    background:linear-gradient(to right, #3498db, #2c3e50);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.table{
+    margin-top: 10%;
+    width: 90%;
+    margin-left: 5%;
+        
+}
+
+.navbar {
+    padding: 10px 0;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-toggler-icon {
+    background-color: white;
+}
+
+.navbar-nav .nav-link {
+    color:black;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: #1f66d0;
+    transform: scale(1.05);
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    margin-top: 5%;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #2980b9;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #1f66d0;
+}
+
+.register_form{
+    position: absolute;
+    top: 15%;
+    left: 30%;
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.2); 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.5); 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login_form{
+    position: absolute;
+    top: 15%;
+    left: 30%;
+    padding: 50px;   
+    background-color: rgba(255, 255, 255, 0.2); 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.5); 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.ticketform{
+    position: absolute;
+    top: 15%;
+    left: 30%;
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.2); 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.5); 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
